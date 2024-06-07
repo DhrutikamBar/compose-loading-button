@@ -47,10 +47,12 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MainScreen(name: String, modifier: Modifier = Modifier) {
+    // Define a flag to remember state of loading
     val isLoading = remember {
         mutableStateOf(false)
     }
 
+    // Launched effect to observe state of loading variable
     LaunchedEffect(key1 = isLoading.value) {
         if (isLoading.value) {
             delay(2000)
@@ -58,12 +60,15 @@ fun MainScreen(name: String, modifier: Modifier = Modifier) {
         }
     }
 
+    // Finally the Loading button component
     LoadingButton(isLoading)
 }
 
 @Composable
 fun LoadingButton(loading: MutableState<Boolean>) {
+    // Setting a box takes max size of the screen
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        // when a state of loading variable is true, We will show a button with circular progress indicator inside it
         if (loading.value) {
             Button(
                 onClick = { },
@@ -81,6 +86,7 @@ fun LoadingButton(loading: MutableState<Boolean>) {
             }
 
         } else {
+            // when a state of loading variable is false, We will show a button with a text inside it
             Button(
                 onClick = { loading.value = true }, modifier = Modifier
                     .fillMaxWidth()
